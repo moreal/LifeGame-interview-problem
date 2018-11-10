@@ -1,7 +1,6 @@
 #!/bin/bash
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd "$DIR"
 
 g++ -I ./headers ./sources/solve.cc -o run $@ >/dev/null && ./run
-
-# ./run
