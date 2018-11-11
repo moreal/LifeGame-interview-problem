@@ -7,6 +7,7 @@ namespace loadcomplete {
         void GiveBirth();
         void GrowOld();
 
+        void SetAge(uint8_t);
         uint8_t GetAge() const;
 
         bool IsLive() const;

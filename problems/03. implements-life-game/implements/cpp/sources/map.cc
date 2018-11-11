@@ -10,6 +10,7 @@ namespace loadcomplete {
         }
     }
 
+
     template<const int HEIGHT, const int WIDTH>
     Unit (** Map<HEIGHT, WIDTH>::GetUnits())[HEIGHT][WIDTH] {
         return now_buffer == EnumForNowBuffer::BUFFER_A ? units_buffer_a : units_buffer_b;
@@ -28,6 +29,16 @@ namespace loadcomplete {
             for (int j{0}; j < WIDTH; ++j) {
                 GetUnits()[i][j].CheckAndKill();
             }
+        }
+    }
+
+    
+    template<const int HEIGHT, const int WIDTH>
+    void Map<HEIGHT, WIDTH>::ChangeGeneration() {
+        if (now_buffer == EnumForNowBuffer::BUFFER_A) {
+            now_buffer = EnumForNowBuffer::BUFFER_B;
+        } else {
+            now_buffer = EnumForNowBuffer::BUFFER_A;
         }
     }
 }

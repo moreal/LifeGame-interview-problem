@@ -1,6 +1,10 @@
 #include "unit.hpp"
 
 namespace loadcomplete {
+    void Unit::SetAge(uint8_t value) {
+        age = value;
+    }
+
     uint8_t Unit::GetAge() const {
         return age;
     }
