@@ -4,12 +4,12 @@ namespace loadcomplete {
     template <const int HEIGHT, const int WIDTH>
     class LifeGame {
      public:
-        void InitializeMapByInput();
-        void InitializeMapWithArguments();
-
-        void ProcessLifeGame();
+        void StartGame();
 
      private:
+        void InitializeMapByInput();
+        void ProcessLifeOfUnits();
+        
         Map<HEIGHT, WIDTH> map;
     };
 }

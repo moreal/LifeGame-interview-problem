@@ -4,10 +4,14 @@ namespace loadcomplete {
     template <const int HEIGHT, const int WIDTH>
     class Map {
      public:
+        void MoveToNextGeneration();
+        void ChangeGeneration();
         void GrowAllUnits();
         void CheckAllUnits();
 
-        Unit& GetUnit(int x, int y);
+        bool HasLivingUnit();
+
+        Unit& GetUnit(const int, const int);
     
      private:
         enum class EnumForNowBuffer : uint8_t {
@@ -16,8 +20,10 @@ namespace loadcomplete {
         } now_buffer;
 
         Unit (**GetUnits())[HEIGHT][WIDTH];
+        Unit (**GetNextUnitsBuffer())[HEIGHT][WIDTH];
 
-        void ChangeGeneration();
+        const int GetUnitsCountFromPoint(const int, const int) const;
+        const int ExistsUnit(const int, const int) const;
 
         Unit units_buffer_a[HEIGHT][WIDTH] {};
         Unit units_buffer_b[HEIGHT][WIDTH] {};
