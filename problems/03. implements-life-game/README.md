@@ -1,6 +1,6 @@
 # Implements LifeGame
 
-![Play Image](./images/deepin-screen-recorder_Select area_20181113225220.gif)
+![Play Image](./images/play_image.gif)
 
 ## Overview
 
