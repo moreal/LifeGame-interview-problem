@@ -1,0 +1,5 @@
+language: cpp
+
+script:
+  - cd problems/03. implements-life-game/implements/cpp
+  - ./build
