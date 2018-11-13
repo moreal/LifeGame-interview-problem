@@ -1,8 +1,11 @@
 language: cpp
 
+sudo: yes
+
 before_install:
-  - apt-get update -qq -y
-  - apt-get upgrade -qq -y
+  - sudo apt-get update -qq -y
+  - sudo apt-get upgrade -qq -y
+
 script:
   - cd problems/03.\ implements-life-game/implements/cpp
   - ./build
