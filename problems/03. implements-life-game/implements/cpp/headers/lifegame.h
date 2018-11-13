@@ -1,8 +1,17 @@
-#include "lifegame.hpp"
-
-#include <iostream>
+#include "map.h"
 
 namespace loadcomplete {
+    template <const int HEIGHT, const int WIDTH>
+    class LifeGame {
+     public:
+        void StartGame();
+
+     private:
+        void InitializeMapByInput();
+        void ProcessLifeOfUnits();
+        
+        Map<HEIGHT, WIDTH> map;
+    };
 
     template <const int HEIGHT, const int WIDTH>
     void LifeGame<HEIGHT, WIDTH>::InitializeMapByInput() {
@@ -11,9 +20,18 @@ namespace loadcomplete {
         for (int i{0}; i < HEIGHT; ++i) {
             for (int j{0}; j < WIDTH; ++j) {
                 std::cin >> age;
-                map.GetUnits()[i][j].SetAge(age);
+                map.GetUnitsFromNow()[i][j].SetAge(age);
             }
         }
+    }
+
+
+    template <const int HEIGHT, const int WIDTH>
+    void LifeGame<HEIGHT, WIDTH>::ProcessLifeOfUnits() {
+        map.MoveToNextGeneration();
+        map.ChangeGeneration();
+        map.GrowAllUnits();
+        map.CheckAllUnits();
     }
 
     template <const int HEIGHT, const int WIDTH>
@@ -22,13 +40,5 @@ namespace loadcomplete {
         while (map.HasLivingUnit()) {
             ProcessLifeOfUnits();
         }
-    }
-
-    template <const int HEIGHT, const int WIDTH>
-    void LifeGame<HEIGHT, WIDTH>::ProcessLifeOfUnits() {
-        map.MoveToNextGeneration();
-        map.ChangeGeneration();
-        map.GrowAllUnits();
-        map.CheckAllUnits();
     }
 }

@@ -4,6 +4,8 @@ namespace loadcomplete {
     class Unit {
 
      public:
+        Unit();
+
         void GiveBirth();
         void GrowOld();
 
@@ -13,6 +15,14 @@ namespace loadcomplete {
         bool IsLive() const;
 
         void CheckAndKill();
+
+
+        enum UnitState {
+            DEATH = -1,
+            NEWBORN = 0,
+            LIVE,
+            TOO_OLD = 7,
+        };
 
      private:
         uint8_t age;

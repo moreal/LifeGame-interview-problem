@@ -3,6 +3,4 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 cd "$DIR"
 
-./run 2>/dev/null && rm ./run
-
-g++ -I ./headers `find ./sources/*.cc` -o run $@ >/dev/null && ./run
+g++ -I ./headers `find ./sources/*.cc` -o run $@ >/dev/null

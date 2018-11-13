@@ -1,6 +1,10 @@
-#include "unit.hpp"
+#include "unit.h"
 
 namespace loadcomplete {
+    Unit::Unit() : age(DEATH) {
+        
+    }
+
     void Unit::SetAge(uint8_t value) {
         age = value;
     }
@@ -11,7 +15,7 @@ namespace loadcomplete {
 
     void Unit::GiveBirth() {
         if (!IsLive()) {
-            age = 1;
+            age = NEWBORN;
         }
     }
 
@@ -22,12 +26,12 @@ namespace loadcomplete {
     }
 
     bool Unit::IsLive() const {
-        return 0 < age && age < 7;
+        return age != DEATH;
     }
 
     void Unit::CheckAndKill() {
         if (!IsLive()) {
-            age = 0;
+            age = DEATH;
         }
     }
 }
