@@ -1,30 +1,29 @@
 namespace loadcomplete {
-    using uint8_t = unsigned char;
+    using int8_t = char;
     
     class Unit {
 
      public:
         Unit();
 
-        void GiveBirth();
-        void GrowOld();
+        void give_birth();
+        void grow_old();
 
-        void SetAge(uint8_t);
-        uint8_t GetAge() const;
+        void set_age(int8_t);
+        int8_t get_age() const;
 
-        bool IsLive() const;
+        bool is_live() const;
 
-        void CheckAndKill();
-
+        void check_and_kill();
 
         enum UnitState {
             DEATH = -1,
             NEWBORN = 0,
-            LIVE,
+            LIVE = 1,
             TOO_OLD = 7,
         };
 
      private:
-        uint8_t age;
+        int8_t age;
     };
 }

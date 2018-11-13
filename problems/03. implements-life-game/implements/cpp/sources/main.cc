@@ -7,7 +7,7 @@ auto main() -> int {
 
     LifeGame<25, 25> lifeGame;
     
-    lifeGame.StartGame();
+    lifeGame.start_game();
     
     return 0;
 }

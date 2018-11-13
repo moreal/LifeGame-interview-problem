@@ -2,139 +2,164 @@
 
 #include <functional>
 #include <iostream>
+#include <string>
+#include <cstdlib>
+#include <chrono>
+#include <thread>
 
 namespace loadcomplete {
     template <const int HEIGHT, const int WIDTH>
     class Map {
      public:
-        void MoveToNextGeneration();
-        void ChangeGeneration();
-        void GrowAllUnits();
-        void CheckAllUnits();
+        void move_to_next_generation();
+        void change_generation();
+        void grow_all_units();
+        void check_all_units();
 
-        bool HasLivingUnit();
+        bool has_living_unit();
 
-        Unit& GetUnit(const int, const int);
-    
-        Unit (*GetUnitsFromNow())[WIDTH];
-        Unit (*GetUnitsFromNextGeneration())[WIDTH];
-     
-     private:
-        enum class EnumForNowBuffer : uint8_t {
+        Unit& get_unit(const int, const int);
+        
+        void show_map();
+        
+        enum class NowBuffer : int8_t {
             BUFFER_A,
             BUFFER_B,
         } now_buffer;
 
 
-        const int GetUnitsCountFromPoint(const int, const int);
-        const int ExistsUnit(const int, const int);
+     private:
+        Unit (*get_units_from_now())[WIDTH];
+        Unit (*get_units_from_next_generation())[WIDTH];
 
-        void FillUnitsDataWithValue(Unit (*units)[WIDTH], int age);
+        const int get_units_count_from_point(const int, const int);
+        const int exists_unit(const int, const int);
 
-        void ForEachUnits(Unit (*units)[WIDTH], std::function<void(Unit&)> fn);
+        void for_each_units(Unit (*)[WIDTH], std::function<void(Unit&)>);
+        void fill_units_data_with_value(Unit (*)[WIDTH], int);
 
         Unit units_buffer_a[HEIGHT][WIDTH] {};
         Unit units_buffer_b[HEIGHT][WIDTH] {};
     };
 
     template<const int HEIGHT, const int WIDTH>
-    void Map<HEIGHT, WIDTH>::GrowAllUnits() {
-        ForEachUnits(GetUnitsFromNow(), [](Unit& unit){
-            unit.GrowOld();
+    void Map<HEIGHT, WIDTH>::grow_all_units() {
+        for_each_units(get_units_from_now(), [](Unit& unit){
+            unit.grow_old();
         });
     }
 
 
     template<const int HEIGHT, const int WIDTH>
-    Unit (*Map<HEIGHT, WIDTH>::GetUnitsFromNow()) [WIDTH] {
-        return now_buffer == EnumForNowBuffer::BUFFER_A ? units_buffer_a : units_buffer_b;
+    Unit (*Map<HEIGHT, WIDTH>::get_units_from_now()) [WIDTH] {
+        return now_buffer == NowBuffer::BUFFER_A ? units_buffer_a : units_buffer_b;
     }
     
 
     template<const int HEIGHT, const int WIDTH>
-    Unit (* Map<HEIGHT, WIDTH>::GetUnitsFromNextGeneration()) [WIDTH] {
-        return now_buffer == EnumForNowBuffer::BUFFER_A ? units_buffer_b : units_buffer_a;
+    Unit (* Map<HEIGHT, WIDTH>::get_units_from_next_generation()) [WIDTH] {
+        return now_buffer == NowBuffer::BUFFER_A ? units_buffer_b : units_buffer_a;
     }
 
 
     template<const int HEIGHT, const int WIDTH>
-    Unit& Map<HEIGHT, WIDTH>::GetUnit(const int x, const int y) {
-        return GetUnitsFromNow()[y][x];
+    Unit& Map<HEIGHT, WIDTH>::get_unit(const int y, const int x) {
+        return get_units_from_now()[y][x];
     }
 
 
     template<const int HEIGHT, const int WIDTH>
-    void Map<HEIGHT, WIDTH>::CheckAllUnits() {
-        ForEachUnits(GetUnitsFromNow(), [](Unit& unit) {
-            unit.CheckAndKill();
+    void Map<HEIGHT, WIDTH>::check_all_units() {
+        for_each_units(get_units_from_now(), [](Unit& unit) {
+            unit.check_and_kill();
         });
     }
 
     
     template<const int HEIGHT, const int WIDTH>
-    void Map<HEIGHT, WIDTH>::ChangeGeneration() {
-        if (now_buffer == EnumForNowBuffer::BUFFER_A) {
-            now_buffer = EnumForNowBuffer::BUFFER_B;
+    void Map<HEIGHT, WIDTH>::change_generation() {
+        if (now_buffer == NowBuffer::BUFFER_A) {
+            now_buffer = NowBuffer::BUFFER_B;
         } else {
-            now_buffer = EnumForNowBuffer::BUFFER_A;
+            now_buffer = NowBuffer::BUFFER_A;
         }
     }
 
 
     template<const int HEIGHT, const int WIDTH>
-    bool Map<HEIGHT, WIDTH>::HasLivingUnit() {
+    bool Map<HEIGHT, WIDTH>::has_living_unit() {
         for (int i{0}; i < HEIGHT; ++i) {
             for (int j{0}; j < WIDTH; ++j) {
-                if (GetUnitsFromNow()[i][j].IsLive())
+                if (get_unit(i, j).is_live())
                     return true;
             }
         }
         return false;
     }
 
+
     template<const int HEIGHT, const int WIDTH>
-    void Map<HEIGHT, WIDTH>::MoveToNextGeneration() {
-        auto now_units = GetUnitsFromNow();
-        auto next_units = GetUnitsFromNextGeneration();
+    void Map<HEIGHT, WIDTH>::show_map() {
+        system("clear");
 
         for (int i{0}; i < HEIGHT; ++i) {
             for (int j{0}; j < WIDTH; ++j) {
-                const int count = GetUnitsCountFromPoint(j, i); 
+                std::cout << (get_unit(i, j).is_live() ? "★" : "☆") << ' ';
+            }
+            std::putchar('\n');
+        }
+        std::putchar('\n');
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    }
+
+
+    template<const int HEIGHT, const int WIDTH>
+    void Map<HEIGHT, WIDTH>::move_to_next_generation() {
+        auto now_units = get_units_from_now();
+        auto next_units = get_units_from_next_generation();
+
+        fill_units_data_with_value(next_units, Unit::DEATH);
+
+        for (int i{0}; i < HEIGHT; ++i) {
+            for (int j{0}; j < WIDTH; ++j) {
+                const int count = get_units_count_from_point(i, j);
                 if (count == 3) {
-                    if (GetUnit(i, j).IsLive()) {
-                        next_units[j][i] = GetUnit(i, j);
+                    if (get_unit(i, j).is_live()) {
+                        next_units[i][j] = get_unit(i, j);
                     } else {
-                        GetUnit(i, j).GiveBirth();
+                        next_units[i][j].give_birth();
                     }
                 } else if (count == 2) {
-                    if (GetUnit(i, j).IsLive()) {
-                        next_units[j][i] = GetUnit(i, j);
+                    if (get_unit(i, j).is_live()) {
+                        next_units[i][j] = get_unit(i, j);
                     }
-                } else {
-                    GetUnit(i, j).SetAge(Unit::DEATH);
                 }
             }
         }
     }
 
+
     template<const int HEIGHT, const int WIDTH>
-    const int Map<HEIGHT, WIDTH>::GetUnitsCountFromPoint(const int x, const int y) {
-        return ExistsUnit(x - 1, y - 1) + ExistsUnit(x, y - 1) + ExistsUnit(x + 1, y - 1)
-             + ExistsUnit(x - 1, y)                            + ExistsUnit(x + 1, y)
-             + ExistsUnit(x - 1, y + 1) + ExistsUnit(x, y + 1) + ExistsUnit(x + 1,  y + 1);
+    const int Map<HEIGHT, WIDTH>::get_units_count_from_point(const int x, const int y) {
+        return exists_unit(x - 1, y - 1) + exists_unit(x, y - 1) + exists_unit(x + 1, y - 1)
+             + exists_unit(x - 1, y)                             + exists_unit(x + 1, y)
+             + exists_unit(x - 1, y + 1) + exists_unit(x, y + 1) + exists_unit(x + 1,  y + 1);
     }
 
 
     template<const int HEIGHT, const int WIDTH>
-    const int Map<HEIGHT, WIDTH>::ExistsUnit(const int x, const int y) {
-        if (x < 0 || x >= WIDTH) return 0;
-        else if (y < 0 || y >= HEIGHT) return 0;
-        else return GetUnit(x, y).IsLive() == true;
+    const int Map<HEIGHT, WIDTH>::exists_unit(const int x, const int y) {
+        if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT) {
+            return 0;
+        } else {
+            return get_unit(x, y).is_live();
+        }
     }
 
 
     template<const int HEIGHT, const int WIDTH>
-    void Map<HEIGHT, WIDTH>::ForEachUnits(Unit (*units)[WIDTH], std::function<void(Unit&)> fn) {
+    void Map<HEIGHT, WIDTH>::for_each_units(Unit (*units)[WIDTH], std::function<void(Unit&)> fn) {
         for (int i{0}; i < HEIGHT; ++i) {
             for (int j{0}; j < WIDTH; ++j) {
                 fn(units[i][j]);
@@ -144,9 +169,9 @@ namespace loadcomplete {
 
     
     template<const int HEIGHT, const int WIDTH>
-    void Map<HEIGHT, WIDTH>::FillUnitsDataWithValue(Unit (*units)[WIDTH], int age) {
-        ForEachUnits(units, [age](Unit& unit) {
-            unit.SetAge(age);
+    void Map<HEIGHT, WIDTH>::fill_units_data_with_value(Unit (*units)[WIDTH], int age) {
+        for_each_units(units, [age](Unit& unit) {
+            unit.set_age(age);
         });
     }
 }
