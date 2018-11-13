@@ -1,4 +1,6 @@
-# Implements LifeGame (Cell)
+# Implements LifeGame
+
+![Play Image](./images/deepin-screen-recorder_Select area_20181113225220.gif)
 
 ## Overview
 
@@ -12,16 +14,6 @@
 5. 생존 규칙에 따라 생존한 세포의 나이가 6보다 크면 소멸
 
 ## My Solutions
-
-일단 판을 2개 준비합니다. 하나는 before(now), 하나는 after(new) 가 될것입니다.  
-더블버퍼링(?) 일지도요.
-
-- void ProcessLifeGame();
-- void LifeGame();
-- void LifeGame();
-
-
-
 
 
 
