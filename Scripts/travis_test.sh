@@ -6,5 +6,5 @@ sh ./Scripts/build.sh
 # unit test
 mkdir build
 cd build
-cmake ../../Test/
-makes
+cmake ../Test/
+make

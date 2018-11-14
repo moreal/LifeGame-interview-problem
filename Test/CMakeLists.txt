@@ -1,9 +1,11 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.10)
  
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-file(GLOB_RECURSE TEST_SOURCE_LIST "./*.cc")
+# MESSAGE(${CMAKE_CURRENT_SOURCE_DIR}/*.cc)
+file(GLOB_RECURSE TEST_SOURCE_LIST *.cc)
+# MESSAGE(${TEST_SOURCE_LIST})
 
-add_executable(LifeGameTest TEST_SOURCE_LIST)
+add_executable(LifeGameTest ${TEST_SOURCE_LIST})
 target_link_libraries(LifeGameTest ${GTEST_LIBRARIES} pthread)
