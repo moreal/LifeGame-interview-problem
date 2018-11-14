@@ -1,14 +1,5 @@
 language: cpp
 
-# before_install:
-#   - sudo apt-get update -qq -y
-#   - sudo apt-get upgrade -qq -y
-
-# script:
-#   - ./problems/03.\ implements-life-game/implements/cpp/build
-#   - cd ./problems/03.\ implements-life-game/implements/cpp/Test/
-#   - cmake && make
-
 matrix:
   include:
     - os: linux
@@ -39,9 +30,6 @@ before_install:
        cmake .;
        sudo make -j $CPU_NUM install && cd ..;
     fi
-
-before_script:
-  - cd problems/03.\ implements-life-game/implements/cpp/
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
