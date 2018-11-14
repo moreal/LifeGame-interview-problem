@@ -1,5 +1,7 @@
 # Implements LifeGame
 
+[![Build Status](https://travis-ci.com/moreal/interview-problems.svg?branch=master)](https://travis-ci.com/moreal/interview-problems) ![](https://img.shields.io/badge/language-cpp-blue.svg)
+
 ![Play Image](./images/play_image.gif)
 
 ## Overview
