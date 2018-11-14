@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # build test
-sh Scripts/build.sh
+sh ./Scripts/build.sh
 
 # unit test
 mkdir build
