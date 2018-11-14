@@ -1,12 +1,47 @@
 language: cpp
 
-sudo: yes
+# before_install:
+#   - sudo apt-get update -qq -y
+#   - sudo apt-get upgrade -qq -y
+
+# script:
+#   - ./problems/03.\ implements-life-game/implements/cpp/build
+#   - cd ./problems/03.\ implements-life-game/implements/cpp/Test/
+#   - cmake && make
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+      services: docker
+      script:
+        - sh Scripts/travis_build.sh
+
+    - os: osx
+      osx_image: xcode9
+      compiler: clang
+      script:
+        - sh Scripts/travis_build.sh
 
 before_install:
-  - sudo apt-get update -qq -y
-  - sudo apt-get upgrade -qq -y
+  - eval "${MATRIX_EVAL}"
+  - if [ $TRAVIS_OS_NAME == linux ]; then 
+       sudo apt-get update -qq;
+      #  sudo apt-get install -y --no-install-recommends lcov;
+    fi
+  - if [ $TRAVIS_OS_NAME == osx ]; then 
+       brew update;
+      #  brew install lcov;
+       wget https://github.com/google/googletest/archive/release-1.8.0.tar.gz;
+       tar xvf release-1.8.0.tar.gz;
+       cd googletest-release-1.8.0;
+       cmake .;
+       sudo make -j $CPU_NUM install && cd ..;
+    fi
 
-script:
-  - ./problems/03.\ implements-life-game/implements/cpp/build
-  - cd ./problems/03.\ implements-life-game/implements/cpp/Test/
-  - cmake && make
+before_script:
+  - cd problems/03.\ implements-life-game/implements/cpp/
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
