@@ -13,8 +13,18 @@
 4. 나이 증가가 완료된 후 주위 세포가 2 또는 3개만 있다면 생존합니다. 그 외의 세포가 있다면 소멸합니다.
 5. 생존 규칙에 따라 생존한 세포의 나이가 6보다 크면 소멸
 
-## How to run
+## My Solutions
 
-```bash
-./build && cat tests/origin.case | ./run
-```
+
+
+
+
+
+
+
+- 
+
+## Languages
+
+- C++
+- Python
