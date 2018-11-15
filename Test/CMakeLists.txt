@@ -8,12 +8,14 @@ file(GLOB_RECURSE TEST_SOURCE_LIST *.cc)
 
 # Avoid duplicate main function
 # GET_FILENAME_COMPONENT(FULL_PATH_MAIN_CPP ${CMAKE_CURRENT_SOURCE_DIR}/../Source/main.cc)
+
+Message(${ORIGIN_SOURCE_LIST})
 list(REMOVE_ITEM ORIGIN_SOURCE_LIST ${CMAKE_CURRENT_SOURCE_DIR}/../Source/main.cc)
 
 MESSAGE(${CMAKE_CURRENT_SOURCE_DIR}/../Source/main.cc)
 # MESSAGE(${FULL_PATH_MAIN_CPP})
 
-# Message(${ORIGIN_SOURCE_LIST})
+Message(${ORIGIN_SOURCE_LIST})
 
 include_directories(LifeGameTest
     ../Header
