@@ -1,8 +1,8 @@
 # Implements LifeGame
 
-[![Build Status](https://travis-ci.com/moreal/interview-problems.svg?branch=master)](https://travis-ci.com/moreal/interview-problems) ![](https://img.shields.io/badge/language-cpp-blue.svg)
+[![Build Status](https://travis-ci.com/moreal/LifeGame-interview-problem.svg?branch=master)](https://travis-ci.com/moreal/interview-problems) ![](https://img.shields.io/badge/language-cpp-blue.svg)
 
-![Play Image](./images/play_image.gif)
+![Play Image](./Images/play_image.gif)
 
 ## Overview
 
@@ -18,5 +18,12 @@
 ## How to run
 
 ```bash
-./implements/cpp/build && cat ./implements/cpp/Case/some_test.case | ./implements/cpp/run
+Scripts/build.sh && ./run
 ```
+
+## Stack (?)
+
+- C++
+- CMake
+- Travis-CI
+- Google Test
