@@ -5,11 +5,11 @@ namespace loadcomplete {
         
     }
 
-    void Unit::set_age(int8_t value) {
+    void Unit::set_age(int value) {
         age = value;
     }
 
-    int8_t Unit::get_age() const {
+    int Unit::get_age() const {
         return age;
     }
 

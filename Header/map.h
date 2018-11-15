@@ -22,7 +22,7 @@ namespace loadcomplete {
         
         void show_map();
         
-        enum class NowBuffer : int8_t {
+        enum class NowBuffer : int {
             BUFFER_A,
             BUFFER_B,
         } now_buffer;

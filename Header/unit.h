@@ -1,6 +1,4 @@
 namespace loadcomplete {
-    using int8_t = char;
-    
     class Unit {
 
      public:
@@ -9,8 +7,8 @@ namespace loadcomplete {
         void give_birth();
         void grow_old();
 
-        void set_age(int8_t);
-        int8_t get_age() const;
+        void set_age(int);
+        int get_age() const;
 
         bool is_live() const;
 
@@ -24,6 +22,6 @@ namespace loadcomplete {
         };
 
      private:
-        int8_t age;
+        int age;
     };
 }
