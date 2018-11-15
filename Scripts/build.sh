@@ -1,3 +1,3 @@
 #!/bin/bash
 
-g++ -I ./Header `find ./Source/*.cc` -o run $@
+g++ -std=c++11 -I ./Header `find ./Source/*.cc` -o run $@

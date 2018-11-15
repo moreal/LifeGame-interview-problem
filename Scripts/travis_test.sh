@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # build test
-sh ./Scripts/build.sh -std=c++11
+sh ./Scripts/build.sh
 
 # unit test
 mkdir build
