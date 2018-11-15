@@ -8,3 +8,4 @@ mkdir build
 cd build
 cmake ../Test/
 make
+./LifeGameTest
