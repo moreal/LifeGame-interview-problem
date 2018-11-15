@@ -1,5 +1,6 @@
 # Implements LifeGame
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9c52d51cc32343f1926ab65fe7d48d09)](https://app.codacy.com/app/dogeonlove0326/LifeGame-interview-problem?utm_source=github.com&utm_medium=referral&utm_content=moreal/LifeGame-interview-problem&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.com/moreal/LifeGame-interview-problem.svg?branch=master)](https://travis-ci.com/moreal/interview-problems) ![](https://img.shields.io/badge/language-cpp-blue.svg)
 
 ![Play Image](./Images/play_image.gif)
